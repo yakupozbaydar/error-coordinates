@@ -1,0 +1,120 @@
+{
+  "name": "error-coordinates",
+  "displayName": "Minimap Spotter",
+  "description": "Pinpoint error locations with gutter icons and overview ruler markers — jump between errors with Alt+E",
+  "version": "0.1.0",
+  "publisher": "blancoff",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "errorCoordinates.nextError",
+        "title": "Go to Next Error",
+        "category": "Minimap Spotter"
+      },
+      {
+        "command": "errorCoordinates.previousError",
+        "title": "Go to Previous Error",
+        "category": "Minimap Spotter"
+      },
+      {
+        "command": "errorCoordinates.listErrors",
+        "title": "List All Errors",
+        "category": "Minimap Spotter"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "errorCoordinates.nextError",
+        "key": "alt+e",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "errorCoordinates.previousError",
+        "key": "alt+shift+e",
+        "when": "editorTextFocus"
+      }
+    ],
+    "configuration": {
+      "title": "Minimap Spotter",
+      "properties": {
+        "errorCoordinates.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable or disable error markers"
+        },
+        "errorCoordinates.gutterIconEnabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show error icons in the gutter"
+        },
+        "errorCoordinates.overviewRulerEnabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show error markers in the overview ruler"
+        },
+        "errorCoordinates.markerColor": {
+          "type": "string",
+          "default": "#FF6B6B",
+          "description": "Color for overview ruler markers"
+        },
+        "errorCoordinates.showToastOnJump": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show a notification when jumping to an error"
+        }
+      }
+    },
+    "colors": [
+      {
+        "id": "errorCoordinates.rulerMarkerColor",
+        "description": "Color for error markers in the overview ruler",
+        "defaults": {
+          "dark": "#FF6B6B",
+          "light": "#E53E3E",
+          "highContrast": "#FF0000",
+          "highContrastLight": "#CC0000"
+        }
+      },
+      {
+        "id": "errorCoordinates.gutterBackground",
+        "description": "Background color for error gutter decorations",
+        "defaults": {
+          "dark": "#FF6B6B20",
+          "light": "#E53E3E20",
+          "highContrast": "#FF000030",
+          "highContrastLight": "#CC000030"
+        }
+      }
+    ]
+  },
+  "scripts": {
+    "compile": "node esbuild.js",
+    "compile:tests": "tsc -p tsconfig.json",
+    "watch": "node esbuild.js --watch --sourcemap",
+    "check-types": "tsc --noEmit",
+    "lint": "tsc --noEmit",
+    "pretest": "npm run compile && npm run compile:tests",
+    "test": "vscode-test",
+    "package": "node esbuild.js --minify"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.6",
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
+    "esbuild": "^0.24.0",
+    "typescript": "^5.3.3",
+    "npm-run-all": "^4.1.5"
+  }
+}
